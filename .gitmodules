@@ -1,0 +1,3 @@
+[submodule "bezbios"]
+	path = bezbios
+	url = git@github.com:korneliuszo/bezbios
