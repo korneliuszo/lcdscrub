@@ -36,21 +36,37 @@ static void mainf()
 			line[x]=(x%4)+4*(y%4);
 		put_next_pixels(0,y,640,line);
 	}
-	int i = 0;
+	int i = 0, j=0;
+	bool vert=true;
 	while(1)
 	{
 		unsigned char palette[3*16];
 		i++;
 		if (i==3*4)
+		{
 			i=0;
-
+			j++;
+			if(j==1000)
+			{
+				j=0;
+				vert=!vert;
+			}
+		}
 		for(int p=0;p<3*16;p++)
 			palette[p]=0;
-		palette[i+3*4*0] = 255;
-		palette[i+3*4*1] = 255;
-		palette[i+3*4*2] = 255;
-		palette[i+3*4*3] = 255;
 
+		if(vert)
+		{
+			palette[i+3*4*0] = 255;
+			palette[i+3*4*1] = 255;
+			palette[i+3*4*2] = 255;
+			palette[i+3*4*3] = 255;
+		}
+		else
+		{
+			for(int k=0;k<3*4;k++)
+				palette[k+3*4*(i%4)] = 255;
+		}
 		put_palette(0,16,palette);
 		bezbios_delay_ms(1000);
 	}
